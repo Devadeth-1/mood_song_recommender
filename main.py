@@ -1,32 +1,31 @@
-
+import speech_recognition as sr
+import pyttsx3
 from textblob import TextBlob
-# This program will ask the user how they are feeling and play a song based on their mood.
 
+engine = pyttsx3.init()
 
+def speak(text):
+    engine.say(text)
+    engine.runAndWait()
 
-mood = input("How are you feeling today? ").lower()
-blob_variable = TextBlob(mood).correct()
-# Check the sentiment of the mood
-sentiment_variable = blob_variable.sentiment.polarity
-# Print the sentiment   
+rec = sr.Recognizer()
+with sr.Microphone() as source:
+    print("Speak now...")
+    audio = rec.listen(source)
 
-if sentiment_variable > 0.5:
-    print("🎵 Ith Pwoli Moood!!!")
-    
-elif  sentiment_variable < -0.5:
-    
-    print("🎵 Ith Shokappaattu ")
+try:
+    mood = rec.recognize_google(audio)
+    print("You said:", mood)
+    blob = TextBlob(mood)
+    sentiment = blob.sentiment.polarity
 
-# elif "angry" in mood:
-#     print("🎵 Playing: 'Numb' by Linkin Park'")
+    if sentiment > 0.3:
+        song = "Happy by Pharrell Williams"
+    elif sentiment < -0.3:
+        song = "Fix You by Coldplay"
+    else:
+        song = "Let It Be by The Beatles"
 
-# elif "love" in mood:
-#     print("🎵 Playing: 'Perfect' by Ed Sheeran'")
-
-else:
-    print("🎵 Playing: Ith Edk Moood ")    
-
-
-print(sentiment_variable)
-
-    
+    speak(f"Based on your mood, I suggest: {song}")
+except Exception as e:
+    speak("Sorry, I couldn't understand you.")
