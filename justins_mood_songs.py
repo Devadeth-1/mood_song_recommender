@@ -12,8 +12,8 @@ blob = TextBlob(mood_input)
 sentiment = blob.sentiment.polarity
 
 # === Step 3: Create mood-based MP3 playlists ===
-very_happy_songs = ['temp_audio/very_happy1.mp3', 'temp_audio/very_happy2.mp3']
-happy_songs = ['temp_audio/happy1.mp3', 'temp_audio/happy2.mp3']
+very_happy_songs = ['temp_audio/very_happy1.mp3']
+happy_songs = ['temp_audio/happy1.mp3']
 neutral_songs = ['temp_audio/neutral1.mp3']
 sad_songs = ['temp_audio/sad1.mp3']
 very_sad_songs = ['temp_audio/very_sad1.mp3']
